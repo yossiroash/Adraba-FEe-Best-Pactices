@@ -1,17 +1,17 @@
 ## Issue 1
 
-####Issue description (example with OlssonCapital):
+#### Issue description (example with OlssonCapital):
 
 User is LOGGED IN on the site wich starts with "www" (www.olssoncapital.com).
 BUT when he goes to site without "www" (olssoncapital.com) - he IS NOT LOGGED IN.
 (And vice versa)
 
-####Reason of the issue:
+#### Reason of the issue:
 
 Domain with "www" (www.olssoncapital.com) and without "www" (olssoncapital.com) are considered by browser like 2 different domains.
 Therefore, when we save AccessToken in the Cookies for domain "www.olssoncapital.com" - them are not accessible from domain "olssoncapital.com". And vice versa.
 
-####Solution (use one of listed bellow, no need to apply both):
+#### Solution (use one of listed bellow, no need to apply both):
 
 A) Settup redirect on server - from "www.olssoncapital.com" to "olssoncapital.com".
 In this case as soon as user tries to visit "www.olssoncapital.com" - he will be immediately redirected to "olssoncapital.com".
@@ -22,7 +22,7 @@ In this case cookies are stored on domain ".olssoncapital.com", and can be acces
 `Use A) option like hight priority (because there is no need to make changes in the source code, perform build and deploy after changes. Just small changes by dev-ops)`
 `Use B) option in case - user for any reason dosen't want to settup redirect, which is mentioned in option A)`
 
-####Testing Scenarios:
+#### Testing Scenarios:
 
 Go to "olssoncapital.com" and perform LOG IN.
 Go to "www.olssoncapital.com" and make sure that:
@@ -38,21 +38,21 @@ OR
 
 ## Issue 2 (relates only to NUXT projects)
 
-####Issue description:
+#### Issue description:
 
 User is LOGGED IN, reloads page a lot of times (for example by pressing F5 key).
 As result - user notices, that "user details" are wrong, and belongs to another user (balance, user ID, and another information)
 
-####Reason of the issue:
+#### Reason of the issue:
 
 In case few logged in users are trying to fetch aplication at the same time (by reloading the pages) (for exapmle - in case of highly loaded server) - "nuxtServerInit" function starts to use single Store instance for these few user (in normal case it should use separate unique Store instances per each user). Due to the fact, that we performed AccessToken reading (from cookies inside request) and setting (to Store) inside "nuxtServerInit" function - there were cases, when few different users had the same access token.
 
-####Solution:
+#### Solution:
 
 Do not perform AccessToken reading (from cookies inside request) and setting (to Store) inside "nuxtServerInit" function.
 Move this logic from server-side function "nuxtServerInit" to the client (browser) - for example to "Layout Default file - onCreated function"
 
-####Testing Scenarios:
+#### Testing Scenarios:
 1) Perform Login using user "A" (any user) credentials.
 
 2) Then open "private window" and Login using user "B" (any user, which is different from "A" user) credentials. (Also you can login user "B" on another computer)
