@@ -1,6 +1,6 @@
 # JS
 
-#### Avoid "Can not read prop of undefined". Use [ramda pathOr method](http://ramdajs.com/docs/#pathOr) or atleast do check
+#### Avoid "Can not read prop of undefined". Use [ramda pathOr method](http://ramdajs.com/docs/#pathOr) or at least do check
 
 ###### Bad:
 ```javascript
